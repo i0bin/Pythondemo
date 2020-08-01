@@ -12,7 +12,7 @@ def base(s):
         except:
             return s
     return s
-f = open('base\\1.txt')
+f = open('base\\base.txt')
 
 text = f.read()
 

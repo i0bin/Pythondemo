@@ -1,4 +1,7 @@
+# 第二届网鼎杯虚幻 非预期爬虫
+
 import requests
+
 i=0
 for x in range(0,10): #秒数个位
     for y in range(0,10): #秒数十位

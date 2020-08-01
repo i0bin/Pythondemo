@@ -1,5 +1,8 @@
 ###!/usr/bin/python
 
+# by FlyingMcDonald
+# https://github.com/FlyingMcDonald
+
 import sys, getopt
 
 #用于base64加密，获取待加密字符串的二进制值

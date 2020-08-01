@@ -1,8 +1,8 @@
 # *_*coding:utf-8 *_* 
 # Author: ynm3000 https://ctf.show
 # 标准当铺密码加密解密，空格分割
-#python2
-#python2
+# python2
+
 print("only support python2")
 code = "田由中人工大王夫井羊".decode('utf-8')
 split = ' '

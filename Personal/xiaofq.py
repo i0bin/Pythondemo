@@ -2,15 +2,15 @@ import requests
 import threading
 from time import sleep
 
-#url = "http://zt.asbk.red/app/index.php?i=2&c=entry&do=getticket&m=yunc_ticket&id=" # 抢优惠券接口
-url = "http://test.i0bin.cn/np.php?id=" # 本地搭建的测试接口
+url = "http://zt.asbk.red/app/index.php?i=2&c=entry&do=getticket&m=yunc_ticket&id=" # 抢优惠券接口
+#url = "http://test.i0bin.cn/np.php?id=" # 本地搭建的测试接口
 # PHPSESSID
-# 此id对每个用户唯一，但使用时必须先要在微信公众号打开优惠券页面激活phpsessid
+# 需要抓包找，phpsessid会变，星期二晚上或者星期三早晨找id
 PHPSESSID = {
-    'li' : "1c1996a6efa24864f145f76c59eb58fc",
+    'li' : "35adeb83f2c84e13355dafb87c8f40de",  #PHPSESSID=35adeb83f2c84e13355dafb87c8f40de
     'hu' : "0d2eee4012322e66571b1d520e03a3b5",
-    'ba' : "bb59074a026d4668b79d00828b254e4d",
-    'ma' : "ce9cfd6c921df945f044dbfdf3307bf6"
+    'ba' : "bb59074a026d4668b79d00828b254e4d",  #PHPSESSID=bb59074a026d4668b79d00828b254e4d
+    'ma' : "ce9cfd6c921df945f044dbfdf3307bf6"   #PHPSESSID=ce9cfd6c921df945f044dbfdf3307bf6
 }
 # 收集的4个手机微信端User-Agent
 ua = {
@@ -23,11 +23,11 @@ ua = {
 # 请求函数
 def req(name, money, PHPSESSID,uurl,ua):
     if money == 100:
-        id = 36
+        id = 41     # id会变！
     elif money == 50:
-        id = 37
+        id = 40
     else:
-        id = 38
+        id = 39
     headers = {
         'User-Agent': ua,
         'Cookie': 'PHPSESSID='+PHPSESSID+'; PHPSESSID='+PHPSESSID+'',
@@ -39,11 +39,11 @@ def req(name, money, PHPSESSID,uurl,ua):
         try:
             result = requests.request("GET", url, headers=headers).text.encode('utf8')
             print(name+':'+str(money)+'_'+result.decode('unicode_escape'))
-            sleep(0.5) # 0.5秒发一个包，可以适当改快
+            sleep(1) # 0.5秒发一个包，可以适当改快
         except:
             print("Error!!! ")
             #print(name+':'+str(money)+'_request timeout 3s')
-            sleep(0.2) # 错误等待时间
+            sleep(0) # 错误等待时间
         finally:
             pass
 
@@ -61,14 +61,14 @@ def threads_join(threads):
 
 # 添加线程
 threads = []
-for money in [100]: #[100,50,30]
+for money in [100,50,30]: #[100,50,30]
     t1 = threading.Thread(target=req,args=("ba",money,PHPSESSID['ba'],url,ua['baua']))
     threads.append(t1)
 for money in [50,30]:
     t1 = threading.Thread(target=req,args=("ma",money,PHPSESSID['ma'],url,ua['maua']))
     threads.append(t1)
-for money in [100,50,30]:
-    t1 = threading.Thread(target=req,args=("hu",money,PHPSESSID['hu'],url,ua['huua']))
+for money in []:
+    t1 = threading.Thread(target=req,args=("li",money,PHPSESSID['li'],url,ua['liua']))
     threads.append(t1)
 
 if __name__ == "__main__": 
